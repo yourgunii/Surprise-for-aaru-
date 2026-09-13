@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>तुझ्यासाठी एक खास सरप्राइज ❤️</title>
 
-  <!-- SweetAlert2 & Confetti -->
+  <!-- SweetAlert2 CSS & JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
@@ -14,7 +15,7 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tiro Devanagari Marathi', 'Outfit', sans-serif; }
 
-    /* ANIMATION 1: Multicolor Animated Gradient Background */
+    /* Premium Multicolor Background */
     body {
       background: linear-gradient(-45deg, #0f172a, #3b0764, #701a75, #4c0519, #1e1b4b);
       background-size: 400% 400%;
@@ -33,37 +34,16 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* ANIMATION 1: Floating Hearts Rain Background */
-    #heartContainer {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 1;
-      overflow: hidden;
-    }
-    .heart-particle {
-      position: absolute;
-      color: #f472b6;
-      font-size: 1.5rem;
-      animation: fall 6s linear infinite;
-      opacity: 0.7;
-    }
-    @keyframes fall {
-      0% { transform: translateY(-10vh) rotate(0deg) scale(0.5); opacity: 1; }
-      100% { transform: translateY(110vh) rotate(360deg) scale(1.2); opacity: 0; }
-    }
-
-    /* Floating Interactive Canvas */
+    /* Floating Canvas */
     #canvas {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
       pointer-events: none;
-      z-index: 2;
+      z-index: 1;
     }
 
-    /* Glassmorphism Container */
+    /* Glass Container */
     .step-card {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(25px);
@@ -116,7 +96,7 @@
       box-shadow: 0 15px 30px rgba(139, 92, 246, 0.6);
     }
 
-    /* Passcode Input */
+    /* Lock Input */
     .pass-input {
       padding: 14px 25px;
       font-size: 1.5rem;
@@ -132,39 +112,7 @@
       box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
     }
 
-    /* ANIMATION 2: Dynamic Glowing Pulsing Heart Icon */
-    .glowing-heart {
-      font-size: 3rem;
-      margin: 15px 0;
-      display: inline-block;
-      animation: heartPulse 1.2s ease infinite;
-      text-shadow: 0 0 20px #ec4899, 0 0 40px #ec4899;
-    }
-    @keyframes heartPulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.25); }
-      100% { transform: scale(1); }
-    }
-
-    /* ANIMATION 3: Glowing Marathi Shayari Box */
-    .shayari-box {
-      background: rgba(15, 23, 42, 0.6);
-      border-left: 4px solid #f472b6;
-      border-right: 4px solid #38bdf8;
-      padding: 20px;
-      border-radius: 15px;
-      margin-top: 20px;
-      box-shadow: 0 0 20px rgba(244, 114, 182, 0.2);
-      font-style: italic;
-    }
-    .shayari-text {
-      font-size: 1.15rem;
-      color: #fb7185;
-      line-height: 1.8;
-      font-weight: 600;
-    }
-
-    /* Fixed Flip Cards (Text Non-Mirrored) */
+    /* Fixed Flip Cards (No Mirroring/Ulta Text) */
     .memory-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -224,7 +172,7 @@
       position: relative;
       overflow: hidden;
       transition: transform 3.5s cubic-bezier(0.15, 0.99, 0.18, 1);
-      box-shadow: 0 0 25px rgba(244, 114, 182, 0.6);
+      box-shadow: 0 0 20px rgba(244, 114, 182, 0.5);
     }
     .wheel-section {
       position: absolute;
@@ -271,42 +219,57 @@
       font-weight: bold;
     }
 
-    /* FULLSCREEN ANIMATED PHOTO SHOWCASE MODAL */
+    /* Timer Box */
+    .timer-box {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .time-unit {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid #38bdf8;
+      padding: 10px;
+      border-radius: 15px;
+      min-width: 65px;
+    }
+    .time-unit span { font-size: 1.4rem; font-weight: bold; display: block; color: #38bdf8; }
+    .time-unit label { font-size: 0.75rem; color: #cbd5e1; }
+
+    /* FULLSCREEN PHOTO SHOWCASE & 3D REVOLVING CAROUSEL */
     .photo-modal {
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.93);
+      background: rgba(0, 0, 0, 0.92);
       z-index: 999;
       display: none;
       justify-content: center;
       align-items: center;
       flex-direction: column;
     }
-    
-    /* ANIMATION 4: Photo Pop & Magic Glow Showcase */
     .photo-modal img {
       max-width: 85%;
-      max-height: 60vh;
+      max-height: 65vh;
       border-radius: 20px;
       border: 3px solid #ec4899;
-      box-shadow: 0 0 40px rgba(236, 72, 153, 0.8);
+      box-shadow: 0 0 35px rgba(236, 72, 153, 0.7);
       animation: zoomInPhoto 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     @keyframes zoomInPhoto {
-      from { transform: scale(0.1) rotate(-15deg); opacity: 0; }
+      from { transform: scale(0.2) rotate(-10deg); opacity: 0; }
       to { transform: scale(1) rotate(0deg); opacity: 1; }
     }
     .photo-caption {
       margin-top: 20px;
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       color: #38bdf8;
       font-weight: bold;
       text-align: center;
       padding: 0 20px;
     }
 
-    /* 3D Revolving Continuous Carousel Line */
+    /* 3D Revolving Line Gallery */
     .carousel-3d-stage {
       width: 100%;
       height: 180px;
@@ -329,11 +292,12 @@
       border-radius: 15px;
       border: 2px solid #a855f7;
       overflow: hidden;
-      box-shadow: 0 5px 20px rgba(168, 85, 247, 0.5);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     }
     .carousel-3d-item img {
       width: 100%; height: 100%; object-fit: cover;
     }
+    /* 4 Photos positioning in 3D Circle */
     .carousel-3d-item:nth-child(1) { transform: rotateY(0deg) translateZ(140px); }
     .carousel-3d-item:nth-child(2) { transform: rotateY(90deg) translateZ(140px); }
     .carousel-3d-item:nth-child(3) { transform: rotateY(180deg) translateZ(140px); }
@@ -344,24 +308,7 @@
       to { transform: rotateY(360deg); }
     }
 
-    /* Timer Box */
-    .timer-box {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
-    }
-    .time-unit {
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid #38bdf8;
-      padding: 10px;
-      border-radius: 15px;
-      min-width: 65px;
-    }
-    .time-unit span { font-size: 1.4rem; font-weight: bold; display: block; color: #38bdf8; }
-    .time-unit label { font-size: 0.75rem; color: #cbd5e1; }
-
-    /* Music Control Button */
+    /* Music Button */
     .music-btn {
       position: fixed;
       top: 20px;
@@ -379,27 +326,22 @@
 </head>
 <body>
 
-  <!-- Falling Hearts Rain Animation Container -->
-  <div id="heartContainer"></div>
-
-  <!-- Interactive Sparkles Canvas -->
   <canvas id="canvas"></canvas>
 
   <div class="music-btn" onclick="toggleMusic()">🎵 <span id="mText">गाणे ऐका</span></div>
   <audio id="bgMusic" loop src="Udaarian_-__lyrics__Badi_lambi_hai_kahani_mere_pyaar_ki_“Satinder_sartaaj____punjabi_song___(48k).mp3"></audio>
 
-  <!-- STEP 1: SECRET LOCK SCREEN -->
+  <!-- STEP 1: LOCK SCREEN -->
   <div class="step-card active" id="step1">
-    <div class="glowing-heart">💖</div>
-    <h1>सिक्रेट लव्ह लॉक</h1>
+    <h1>🔒 सिक्रेट लव्ह लॉक</h1>
     <p>ही स्पेशल वेबसाईट उघडण्यासाठी आपल्या प्रेमाची सिक्रेट तारीख एंटर कर!</p>
-    <p style="font-size: 0.85rem; color: #f472b6; margin-top: 8px;">(हिंट: प्रेमाची सुरुवात झालेली तारीख DDMM 🔒)</p>
+    <p style="font-size: 0.85rem; color: #f472b6; margin-top: 8px;">(हिंट: प्रेमाची सुरुवात झालेली तारीख DDMM 💖)</p>
     <input type="password" id="passCode" class="pass-input" placeholder="****" maxlength="4">
     <br>
     <button class="btn-action" onclick="checkPass()">अनलॉक करा 🔑</button>
   </div>
 
-  <!-- STEP 2: LOVE STORY TIMELINE -->
+  <!-- STEP 2: STORY TIMELINE (EXTENDED TIME) -->
   <div class="step-card" id="step2">
     <h1>माझ्या प्रिय... 💌</h1>
     <p id="storyText" style="min-height: 80px;">
@@ -408,30 +350,15 @@
     <button class="btn-action" onclick="nextStory()">पुढे वाचा 📖</button>
   </div>
 
-  <!-- STEP 3: SPECIAL MARATHI ROMANTIC SHAYARI SECTION -->
+  <!-- STEP 3: FLIP CARDS (CORRECTED TEXT ROTATION) -->
   <div class="step-card" id="step3">
-    <h1>माझ्या मनातील भावना... 📜💖</h1>
-    <p>फक्त तुझ्यासाठी लिहिलेल्या खास ओळी:</p>
-    <div class="shayari-box">
-      <p class="shayari-text" id="shayariText">
-        "तू माझ्यासाठी चंद्राचा तुकडा,<br>
-        तारांचा सुंदर झगमगाट...<br>
-        तुझ्यासोबत अंधारातही मला,<br>
-        दिसतो प्रेमाचा सुंदर प्रकाश! ❤️"
-      </p>
-    </div>
-    <button class="btn-action" onclick="nextShayari()">पुढील शायरी 🌹</button>
-  </div>
-
-  <!-- STEP 4: FLIP CARDS GAME -->
-  <div class="step-card" id="step4">
-    <h1>काही खास आठवणी ✨</h1>
+    <h1>काही छान आठवणी ✨</h1>
     <p>प्रत्येक कार्डवर क्लिक करून सिक्रेट मेसेज उघड:</p>
     <div class="memory-grid">
       <div class="flip-card-container" onclick="revealCard(this)">
         <div class="flip-card-inner">
           <div class="flip-card-front">कार्ड १ 💖</div>
-          <div class="flip-card-back">तुझं ते क्युट हसू 😊</div>
+          <div class="flip-card-back">तुझं क्युट हसू 😊</div>
         </div>
       </div>
       <div class="flip-card-container" onclick="revealCard(this)">
@@ -443,7 +370,7 @@
       <div class="flip-card-container" onclick="revealCard(this)">
         <div class="flip-card-inner">
           <div class="flip-card-front">कार्ड ३ 💖</div>
-          <div class="flip-card-back">तुझा तो गोड खोडकरपणा 🌸</div>
+          <div class="flip-card-back">तुझा तो खोडकरपणा 🌸</div>
         </div>
       </div>
       <div class="flip-card-container" onclick="revealCard(this)">
@@ -453,24 +380,24 @@
         </div>
       </div>
     </div>
-    <button class="btn-action" id="step4Next" style="display:none;" onclick="goToStep(5)">पुढील गेम खेळा 🎮</button>
+    <button class="btn-action" id="step3Next" style="display:none;" onclick="goToStep(4)">पुढील गेम खेळा 🎮</button>
   </div>
 
-  <!-- STEP 5: SPIN WHEEL GAME -->
-  <div class="step-card" id="step5">
+  <!-- STEP 4: SPIN WHEEL GAME -->
+  <div class="step-card" id="step4">
     <h1>लकी डेट व्हील 🎡</h1>
     <p>स्पिन बटणावर क्लिक कर आणि बघ आज तुझ्यासाठी काय सरप्राइज आहे!</p>
     <div class="wheel-container" id="wheel">
       <div class="wheel-section sec1">☕ कॉफी डेट</div>
       <div class="wheel-section sec2">🎬 मूव्ही नाईट</div>
-      <div class="wheel-section sec3">🍫 चॉकलेट्स</div>
+      <div class="wheel-section sec3">🍫 चॉकलेट गिफ्ट</div>
       <div class="wheel-section sec4">🍕 पिझ्झा पार्टी</div>
     </div>
     <button class="btn-action" onclick="spinWheel()">व्हील फिरवा (Spin) 🎯</button>
   </div>
 
-  <!-- STEP 6: DODGE QUESTION GAME -->
-  <div class="step-card" id="step6">
+  <!-- STEP 5: QUESTION GAME -->
+  <div class="step-card" id="step5">
     <h1>एक महत्त्वाचा प्रश्न! 🥺❤️</h1>
     <p>तू कितीही प्रयत्न केलास तरी 'नाही' वर क्लिक करू शकणार नाहीस!</p>
     <h2 style="color: #f472b6; margin-top: 15px;">तू माझ्यावर सर्वात जास्त प्रेम करतेस का?</h2>
@@ -486,9 +413,8 @@
     <div class="photo-caption" id="showcaseCaption">आठवणींचा सुंदर प्रवास... ❤️</div>
   </div>
 
-  <!-- STEP 7: FINAL CELEBRATION & CONTINUOUS 3D REVOLVING CAROUSEL -->
-  <div class="step-card" id="step7">
-    <div class="glowing-heart">💖</div>
+  <!-- STEP 6: FINAL CELEBRATION & 3D REVOLVING PHOTO LINE -->
+  <div class="step-card" id="step6">
     <h1>🎉 FOREVER & ALWAYS 🎉</h1>
     <p>माझ्या आयुष्यातील सर्वात सुंदर क्षण तुझ्यासोबत आहेत! ❤️</p>
 
@@ -501,8 +427,8 @@
       <div class="time-unit"><span id="secs">0</span><label>सेकंद</label></div>
     </div>
 
-    <!-- 3D Revolving Continuous Photo Line -->
-    <p style="margin-top: 20px; font-size: 0.9rem; color: #f472b6;">आपल्या फोटोंची ३D फिरणारी गॅलरी ✨</p>
+    <!-- 3D Continuous Revolving Carousel -->
+    <p style="margin-top: 20px; font-size: 0.9rem; color: #f472b6;">आपल्या फोटोंची 3D गॅलरी ✨</p>
     <div class="carousel-3d-stage">
       <div class="carousel-3d-spinner">
         <div class="carousel-3d-item"><img src="photo1.jpg" alt="1"></div>
@@ -512,11 +438,11 @@
       </div>
     </div>
 
-    <p style="margin-top: 20px; font-weight: bold; color: #f472b6; font-size: 1.35rem;">I Love You Unlimited! 💖</p>
+    <p style="margin-top: 20px; font-weight: bold; color: #f472b6; font-size: 1.3rem;">I Love You So Much! 💖</p>
   </div>
 
   <script>
-    // Audio Player Controller
+    // Audio Controller
     const music = document.getElementById('bgMusic');
     let isPlaying = false;
     function toggleMusic() {
@@ -530,7 +456,7 @@
       isPlaying = !isPlaying;
     }
 
-    // Navigation Logic
+    // Step Controller
     function goToStep(stepNumber) {
       document.querySelectorAll('.step-card').forEach(card => card.classList.remove('active'));
       document.getElementById('step' + stepNumber).classList.add('active');
@@ -561,7 +487,7 @@
       }
     }
 
-    // Love Story Pages
+    // Story Extended Lines (More time)
     const storyPages = [
       "ज्या दिवसापासून तू माझ्या आयुष्यात आलीस, माझं जग पूर्णपणे रंगीबेरंगी आणि सुंदर बनलं आहे...",
       "तुझं एक छोटंसं हसू माझा पूर्ण दिवस आनंदी बनवतं. तुझ्यावर माझं इतकं प्रेम जडेल असं मला कधीच वाटलं नव्हतं...",
@@ -578,30 +504,14 @@
       }
     }
 
-    // Romantic Shayari Book Array
-    const shayaris = [
-      "तू माझ्यासाठी चंद्राचा तुकडा,<br>तारांचा सुंदर झगमगाट...<br>तुझ्यासोबत अंधारातही मला,<br>दिसतो प्रेमाचा सुंदर प्रकाश! ❤️",
-      "तुझ्या हसण्याने होते माझ्या दिवसाची सुरुवात,<br>तू नसलीस की अपूर्ण वाटते प्रत्येक गोष्ट खास...<br>माझ्या प्रत्येक स्वप्नात आणि श्वासात,<br>फक्त आणि फक्त तुझाच असतो भास! 💕",
-      "साथ तुझी मला देवाची देणगी वाटते,<br>ज्याच्या सान्निध्यात प्रत्येक गोष्ट सुखाची वाटते...<br>आयुष्याच्या शेवटच्या श्वासापर्यंत,<br>मला फक्त तुझीच साथ हवी आहे! 🌹"
-    ];
-    let shayariIndex = 0;
-    function nextShayari() {
-      shayariIndex++;
-      if(shayariIndex < shayaris.length) {
-        document.getElementById('shayariText').innerHTML = shayaris[shayariIndex];
-      } else {
-        goToStep(4);
-      }
-    }
-
-    // Memory Flip Cards Logic
+    // Memory Cards
     let revealedCount = 0;
     function revealCard(element) {
       if(!element.classList.contains('open')) {
         element.classList.add('open');
         revealedCount++;
         if(revealedCount >= 4) {
-          document.getElementById('step4Next').style.display = 'inline-block';
+          document.getElementById('step3Next').style.display = 'inline-block';
         }
       }
     }
@@ -611,4 +521,84 @@
     function spinWheel() {
       if(spun) return;
       spun = true;
-      const wheel = do
+      const wheel = document.getElementById('wheel');
+      const randomDeg = 1440 + Math.floor(Math.random() * 360);
+      wheel.style.transform = `rotate(${randomDeg}deg)`;
+      setTimeout(() => {
+        Swal.fire({
+          icon: 'star',
+          title: '🎉 येहहह!',
+          text: 'आज तुला मिळणारा सरप्राइज मी नक्की पूर्ण करेन!',
+          background: '#1e1b4b',
+          color: '#fff',
+          confirmButtonColor: '#8b5cf6'
+        }).then(() => goToStep(5));
+      }, 3600);
+    }
+
+    // Dodge Button
+    function dodgeNo() {
+      const btn = document.getElementById('noBtn');
+      const x = Math.random() * (window.innerWidth - 140);
+      const y = Math.random() * 200 - 100;
+      btn.style.left = `${x}px`;
+      btn.style.top = `${y}px`;
+    }
+
+    // Fullscreen Animated Photos Sequence (One by One)
+    const photos = [
+      { src: 'photo1.jpg', caption: '१ली सुंदर आठवण: तुझं ते मनमोहक रूप! 🌸' },
+      { src: 'photo2.jpg', caption: '२ री आठवण: तुझा तो गोड आणि खोडकर अंदाज! ✨' },
+      { src: 'photo3.jpg', caption: '३ री आठवण: आपल्या खास क्षणांची सुंदर झलक! 💕' },
+      { src: 'photo4.jpg', caption: '४ थी आठवण: माझं तुझ्यावरचं अथांग प्रेम! ❤️' }
+    ];
+
+    function startPhotoShowcase() {
+      confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+      const modal = document.getElementById('photoModal');
+      const img = document.getElementById('showcaseImg');
+      const caption = document.getElementById('showcaseCaption');
+      modal.style.display = 'flex';
+
+      let pIndex = 0;
+      function showNextPhoto() {
+        if(pIndex < photos.length) {
+          img.src = photos[pIndex].src;
+          caption.innerText = photos[pIndex].caption;
+          // Re-trigger animation
+          img.style.animation = 'none';
+          img.offsetHeight; 
+          img.style.animation = 'zoomInPhoto 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+          pIndex++;
+          setTimeout(showNextPhoto, 3000); // 3 seconds per photo showcase
+        } else {
+          modal.style.display = 'none';
+          goToStep(6);
+          confetti({ particleCount: 300, spread: 140, origin: { y: 0.6 } });
+        }
+      }
+      showNextPhoto();
+    }
+
+    // Love Counter
+    const startDate = new Date(2024, 2, 24);
+    setInterval(() => {
+      const now = new Date();
+      const diff = now - startDate;
+      document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+      document.getElementById('hours').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      document.getElementById('mins').innerText = Math.floor((diff / 1000 / 60) % 60);
+      document.getElementById('secs').innerText = Math.floor((diff / 1000) % 60);
+    }, 1000);
+
+    // Particle Background Effect
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    let particles = [];
+    class Particle {
+      constructor(x, y) {
+        this.x = x; this.y = y;
+        this.size = Math.random() * 16 +
