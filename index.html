@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>तुझ्यासाठी एक खास सरप्राइज ❤️</title>
 
-  <!-- SweetAlert2 CSS & JS -->
+  <!-- SweetAlert2 CSS & JS (Custom Popups) -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -15,9 +15,9 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tiro Devanagari Marathi', 'Outfit', sans-serif; }
 
-    /* Premium Multicolor Background */
+    /* Animated Multicolor Background */
     body {
-      background: linear-gradient(-45deg, #0f172a, #3b0764, #701a75, #4c0519, #1e1b4b);
+      background: linear-gradient(-45deg, #1a0b2e, #3b0764, #701a75, #4c0519, #0f172a);
       background-size: 400% 400%;
       animation: gradientBG 15s ease infinite;
       min-height: 100vh;
@@ -46,14 +46,14 @@
     /* Glass Container */
     .step-card {
       background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.2);
       width: 92%;
       max-width: 580px;
       padding: 35px 25px;
       border-radius: 30px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
       text-align: center;
       display: none;
       position: relative;
@@ -71,13 +71,14 @@
       background: linear-gradient(to right, #f472b6, #fb7185, #38bdf8);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      font-size: 2rem;
+      font-size: 2.2rem;
       margin-bottom: 15px;
       font-weight: 800;
     }
 
     p { color: #e2e8f0; line-height: 1.7; font-size: 1.1rem; }
 
+    /* Multicolor Neon Buttons */
     .btn-action {
       margin-top: 25px;
       padding: 14px 32px;
@@ -112,57 +113,35 @@
       box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
     }
 
-    /* Fixed Flip Cards (No Mirroring/Ulta Text) */
+    /* Flip Cards with Gradient Borders */
     .memory-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 15px;
       margin-top: 25px;
-      perspective: 1000px;
     }
-    .flip-card-container {
+    .flip-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(56, 189, 248, 0.4);
       height: 110px;
-      perspective: 1000px;
-      cursor: pointer;
-    }
-    .flip-card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      transform-style: preserve-3d;
-    }
-    .flip-card-container.open .flip-card-inner {
-      transform: rotateY(180deg);
-    }
-    .flip-card-front, .flip-card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
       border-radius: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 10px;
+      cursor: pointer;
       font-weight: bold;
-    }
-    .flip-card-front {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.4);
       color: #38bdf8;
+      padding: 12px;
+      transition: all 0.4s ease;
     }
-    .flip-card-back {
-      background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+    .flip-card.open {
+      background: linear-gradient(135deg, #06b6d4, #3b82f6);
       color: white;
+      border-color: #60a5fa;
       transform: rotateY(180deg);
-      border: 1px solid #60a5fa;
-      font-size: 0.95rem;
     }
 
-    /* Spin Wheel */
+    /* Spin Wheel Game */
     .wheel-container {
       margin: 20px auto;
       width: 200px;
@@ -171,7 +150,7 @@
       border: 6px solid #f472b6;
       position: relative;
       overflow: hidden;
-      transition: transform 3.5s cubic-bezier(0.15, 0.99, 0.18, 1);
+      transition: transform 3s cubic-bezier(0.15, 0.99, 0.18, 1);
       box-shadow: 0 0 20px rgba(244, 114, 182, 0.5);
     }
     .wheel-section {
@@ -190,7 +169,7 @@
     .sec3 { background: #06b6d4; transform: rotate(180deg); }
     .sec4 { background: #f59e0b; transform: rotate(270deg); }
 
-    /* Interactive Game */
+    /* Interactive Game Section */
     .btn-group {
       position: relative;
       height: 120px;
@@ -219,6 +198,23 @@
       font-weight: bold;
     }
 
+    /* Photo Gallery Grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+    .gallery img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 15px;
+      border: 2px solid #a855f7;
+    }
+
     /* Timer Box */
     .timer-box {
       display: flex;
@@ -236,79 +232,7 @@
     .time-unit span { font-size: 1.4rem; font-weight: bold; display: block; color: #38bdf8; }
     .time-unit label { font-size: 0.75rem; color: #cbd5e1; }
 
-    /* FULLSCREEN PHOTO SHOWCASE & 3D REVOLVING CAROUSEL */
-    .photo-modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.92);
-      z-index: 999;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-    .photo-modal img {
-      max-width: 85%;
-      max-height: 65vh;
-      border-radius: 20px;
-      border: 3px solid #ec4899;
-      box-shadow: 0 0 35px rgba(236, 72, 153, 0.7);
-      animation: zoomInPhoto 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    @keyframes zoomInPhoto {
-      from { transform: scale(0.2) rotate(-10deg); opacity: 0; }
-      to { transform: scale(1) rotate(0deg); opacity: 1; }
-    }
-    .photo-caption {
-      margin-top: 20px;
-      font-size: 1.3rem;
-      color: #38bdf8;
-      font-weight: bold;
-      text-align: center;
-      padding: 0 20px;
-    }
-
-    /* 3D Revolving Line Gallery */
-    .carousel-3d-stage {
-      width: 100%;
-      height: 180px;
-      perspective: 1000px;
-      margin-top: 25px;
-    }
-    .carousel-3d-spinner {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      animation: rotateSpinner 12s linear infinite;
-    }
-    .carousel-3d-item {
-      position: absolute;
-      width: 120px;
-      height: 150px;
-      left: calc(50% - 60px);
-      top: 15px;
-      border-radius: 15px;
-      border: 2px solid #a855f7;
-      overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    }
-    .carousel-3d-item img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-    /* 4 Photos positioning in 3D Circle */
-    .carousel-3d-item:nth-child(1) { transform: rotateY(0deg) translateZ(140px); }
-    .carousel-3d-item:nth-child(2) { transform: rotateY(90deg) translateZ(140px); }
-    .carousel-3d-item:nth-child(3) { transform: rotateY(180deg) translateZ(140px); }
-    .carousel-3d-item:nth-child(4) { transform: rotateY(270deg) translateZ(140px); }
-
-    @keyframes rotateSpinner {
-      from { transform: rotateY(0deg); }
-      to { transform: rotateY(360deg); }
-    }
-
-    /* Music Button */
+    /* Music Floating Button */
     .music-btn {
       position: fixed;
       top: 20px;
@@ -329,6 +253,8 @@
   <canvas id="canvas"></canvas>
 
   <div class="music-btn" onclick="toggleMusic()">🎵 <span id="mText">गाणे ऐका</span></div>
+  
+  <!-- इथे तुझ्या गाण्याची पूर्ण फाईल नेम ऑटोमॅटिकली टाकली आहे -->
   <audio id="bgMusic" loop src="Udaarian_-__lyrics__Badi_lambi_hai_kahani_mere_pyaar_ki_“Satinder_sartaaj____punjabi_song___(48k).mp3"></audio>
 
   <!-- STEP 1: LOCK SCREEN -->
@@ -341,49 +267,29 @@
     <button class="btn-action" onclick="checkPass()">अनलॉक करा 🔑</button>
   </div>
 
-  <!-- STEP 2: STORY TIMELINE (EXTENDED TIME) -->
+  <!-- STEP 2: ROMANTIC LETTER -->
   <div class="step-card" id="step2">
     <h1>माझ्या प्रिय... 💌</h1>
-    <p id="storyText" style="min-height: 80px;">
+    <p id="storyText">
       ज्या दिवसापासून तू माझ्या आयुष्यात आलीस, माझं जग पूर्णपणे रंगीबेरंगी आणि सुंदर बनलं आहे...
     </p>
     <button class="btn-action" onclick="nextStory()">पुढे वाचा 📖</button>
   </div>
 
-  <!-- STEP 3: FLIP CARDS (CORRECTED TEXT ROTATION) -->
+  <!-- STEP 3: FLIP CARDS -->
   <div class="step-card" id="step3">
     <h1>काही छान आठवणी ✨</h1>
-    <p>प्रत्येक कार्डवर क्लिक करून सिक्रेट मेसेज उघड:</p>
+    <p>कार्ड्सवर क्लिक कर आणि तुझ्यासाठी असलेले मेसेजेस उघड:</p>
     <div class="memory-grid">
-      <div class="flip-card-container" onclick="revealCard(this)">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">कार्ड १ 💖</div>
-          <div class="flip-card-back">तुझं क्युट हसू 😊</div>
-        </div>
-      </div>
-      <div class="flip-card-container" onclick="revealCard(this)">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">कार्ड २ 💖</div>
-          <div class="flip-card-back">आपल्या लांबच लांब गप्पा 💬</div>
-        </div>
-      </div>
-      <div class="flip-card-container" onclick="revealCard(this)">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">कार्ड ३ 💖</div>
-          <div class="flip-card-back">तुझा तो खोडकरपणा 🌸</div>
-        </div>
-      </div>
-      <div class="flip-card-container" onclick="revealCard(this)">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">कार्ड ४ 💖</div>
-          <div class="flip-card-back">माझं अथांग प्रेम ❤️</div>
-        </div>
-      </div>
+      <div class="flip-card" onclick="revealCard(this, 'तुझं क्युट हसू 😊')">कार्ड १</div>
+      <div class="flip-card" onclick="revealCard(this, 'आपल्या लांबच लांब गप्पा 💬')">कार्ड २</div>
+      <div class="flip-card" onclick="revealCard(this, 'तुझा तो खोडकरपणा 🌸')">कार्ड ३</div>
+      <div class="flip-card" onclick="revealCard(this, 'माझं तुझ्यावरचं अथांग प्रेम ❤️')">कार्ड ४</div>
     </div>
     <button class="btn-action" id="step3Next" style="display:none;" onclick="goToStep(4)">पुढील गेम खेळा 🎮</button>
   </div>
 
-  <!-- STEP 4: SPIN WHEEL GAME -->
+  <!-- STEP 4: DATE NIGHT SPIN WHEEL GAME -->
   <div class="step-card" id="step4">
     <h1>लकी डेट व्हील 🎡</h1>
     <p>स्पिन बटणावर क्लिक कर आणि बघ आज तुझ्यासाठी काय सरप्राइज आहे!</p>
@@ -396,27 +302,21 @@
     <button class="btn-action" onclick="spinWheel()">व्हील फिरवा (Spin) 🎯</button>
   </div>
 
-  <!-- STEP 5: QUESTION GAME -->
+  <!-- STEP 5: DO YOU LOVE ME GAME -->
   <div class="step-card" id="step5">
     <h1>एक महत्त्वाचा प्रश्न! 🥺❤️</h1>
     <p>तू कितीही प्रयत्न केलास तरी 'नाही' वर क्लिक करू शकणार नाहीस!</p>
     <h2 style="color: #f472b6; margin-top: 15px;">तू माझ्यावर सर्वात जास्त प्रेम करतेस का?</h2>
     <div class="btn-group">
-      <button class="btn-yes" onclick="startPhotoShowcase()">होय, खूप जास्त! 🥰</button>
+      <button class="btn-yes" onclick="goToStep(6); startConfetti();">होय, खूप जास्त! 🥰</button>
       <button class="btn-no" id="noBtn" onmouseover="dodgeNo()" onclick="dodgeNo()">नाही 😜</button>
     </div>
   </div>
 
-  <!-- FULLSCREEN ANIMATED PHOTO SHOWCASE MODAL -->
-  <div class="photo-modal" id="photoModal">
-    <img id="showcaseImg" src="" alt="Memory Photo">
-    <div class="photo-caption" id="showcaseCaption">आठवणींचा सुंदर प्रवास... ❤️</div>
-  </div>
-
-  <!-- STEP 6: FINAL CELEBRATION & 3D REVOLVING PHOTO LINE -->
+  <!-- STEP 6: GRAND CELEBRATION -->
   <div class="step-card" id="step6">
     <h1>🎉 FOREVER & ALWAYS 🎉</h1>
-    <p>माझ्या आयुष्यातील सर्वात सुंदर क्षण तुझ्यासोबत आहेत! ❤️</p>
+    <p>मला माहित होतं! माझ्यापेक्षा जास्त प्रेम तुझ्यावर कोणीच करू शकत नाही! ❤️</p>
 
     <!-- Love Counter -->
     <p style="margin-top: 15px; font-size: 0.95rem; color: #38bdf8;">आपल्या प्रेमाला झालेले दिवस:</p>
@@ -427,22 +327,19 @@
       <div class="time-unit"><span id="secs">0</span><label>सेकंद</label></div>
     </div>
 
-    <!-- 3D Continuous Revolving Carousel -->
-    <p style="margin-top: 20px; font-size: 0.9rem; color: #f472b6;">आपल्या फोटोंची 3D गॅलरी ✨</p>
-    <div class="carousel-3d-stage">
-      <div class="carousel-3d-spinner">
-        <div class="carousel-3d-item"><img src="photo1.jpg" alt="1"></div>
-        <div class="carousel-3d-item"><img src="photo2.jpg" alt="2"></div>
-        <div class="carousel-3d-item"><img src="photo3.jpg" alt="3"></div>
-        <div class="carousel-3d-item"><img src="photo4.jpg" alt="4"></div>
-      </div>
+    <!-- Photo Gallery -->
+    <div class="gallery">
+      <img src="photo1.jpg" alt="Memory">
+      <img src="photo2.jpg" alt="Memory">
+      <img src="photo3.jpg" alt="Memory">
+      <img src="photo4.jpg" alt="Memory">
     </div>
 
     <p style="margin-top: 20px; font-weight: bold; color: #f472b6; font-size: 1.3rem;">I Love You So Much! 💖</p>
   </div>
 
   <script>
-    // Audio Controller
+    // Audio Control
     const music = document.getElementById('bgMusic');
     let isPlaying = false;
     function toggleMusic() {
@@ -463,7 +360,7 @@
       if(!isPlaying) toggleMusic();
     }
 
-    // Password Check
+    // Password Check (2403) with SweetAlert2
     function checkPass() {
       const input = document.getElementById('passCode').value;
       if(input === "2403") {
@@ -487,11 +384,10 @@
       }
     }
 
-    // Story Extended Lines (More time)
+    // Story Lines
     const storyPages = [
       "ज्या दिवसापासून तू माझ्या आयुष्यात आलीस, माझं जग पूर्णपणे रंगीबेरंगी आणि सुंदर बनलं आहे...",
       "तुझं एक छोटंसं हसू माझा पूर्ण दिवस आनंदी बनवतं. तुझ्यावर माझं इतकं प्रेम जडेल असं मला कधीच वाटलं नव्हतं...",
-      "आपण एकत्र घालवलेला प्रत्येक क्षण माझ्यासाठी सोन्यासारखा मौल्यवान आहे...",
       "माझ्या आयुष्यात आल्याबद्दल आणि प्रत्येक क्षण इतका खास बनवल्याबद्दल मनापासून धन्यवाद! ❤️"
     ];
     let storyIndex = 0;
@@ -504,11 +400,12 @@
       }
     }
 
-    // Memory Cards
+    // Memory Cards Tracker
     let revealedCount = 0;
-    function revealCard(element) {
+    function revealCard(element, text) {
       if(!element.classList.contains('open')) {
         element.classList.add('open');
+        element.innerText = text;
         revealedCount++;
         if(revealedCount >= 4) {
           document.getElementById('step3Next').style.display = 'inline-block';
@@ -533,7 +430,7 @@
           color: '#fff',
           confirmButtonColor: '#8b5cf6'
         }).then(() => goToStep(5));
-      }, 3600);
+      }, 3200);
     }
 
     // Dodge Button
@@ -545,42 +442,12 @@
       btn.style.top = `${y}px`;
     }
 
-    // Fullscreen Animated Photos Sequence (One by One)
-    const photos = [
-      { src: 'photo1.jpg', caption: '१ली सुंदर आठवण: तुझं ते मनमोहक रूप! 🌸' },
-      { src: 'photo2.jpg', caption: '२ री आठवण: तुझा तो गोड आणि खोडकर अंदाज! ✨' },
-      { src: 'photo3.jpg', caption: '३ री आठवण: आपल्या खास क्षणांची सुंदर झलक! 💕' },
-      { src: 'photo4.jpg', caption: '४ थी आठवण: माझं तुझ्यावरचं अथांग प्रेम! ❤️' }
-    ];
-
-    function startPhotoShowcase() {
-      confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-      const modal = document.getElementById('photoModal');
-      const img = document.getElementById('showcaseImg');
-      const caption = document.getElementById('showcaseCaption');
-      modal.style.display = 'flex';
-
-      let pIndex = 0;
-      function showNextPhoto() {
-        if(pIndex < photos.length) {
-          img.src = photos[pIndex].src;
-          caption.innerText = photos[pIndex].caption;
-          // Re-trigger animation
-          img.style.animation = 'none';
-          img.offsetHeight; 
-          img.style.animation = 'zoomInPhoto 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-          pIndex++;
-          setTimeout(showNextPhoto, 3000); // 3 seconds per photo showcase
-        } else {
-          modal.style.display = 'none';
-          goToStep(6);
-          confetti({ particleCount: 300, spread: 140, origin: { y: 0.6 } });
-        }
-      }
-      showNextPhoto();
+    // Confetti Fireworks
+    function startConfetti() {
+      confetti({ particleCount: 300, spread: 140, origin: { y: 0.6 } });
     }
 
-    // Love Counter
+    // Love Counter (24 March 2024 Start Date)
     const startDate = new Date(2024, 2, 24);
     setInterval(() => {
       const now = new Date();
@@ -591,7 +458,7 @@
       document.getElementById('secs').innerText = Math.floor((diff / 1000) % 60);
     }, 1000);
 
-    // Particle Background Effect
+    // Dynamic Touch & Mouse Floating Hearts
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -600,5 +467,58 @@
     let particles = [];
     class Particle {
       constructor(x, y) {
-        this.x = x; this.y = y;
-        this.size = Math.random() * 16 +
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 16 + 6;
+        this.speedX = Math.random() * 3 - 1.5;
+        this.speedY = Math.random() * 3 - 1.5;
+        this.color = `hsl(${Math.random() * 360}, 100%, 75%)`;
+        this.opacity = 1;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.opacity -= 0.02;
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.font = `${this.size}px serif`;
+        ctx.fillText('✨', this.x, this.y);
+        ctx.restore();
+      }
+    }
+
+    function handleParticles(e) {
+      const x = e.touches ? e.touches[0].clientX : e.clientX;
+      const y = e.touches ? e.touches[0].clientY : e.clientY;
+      for (let i = 0; i < 2; i++) {
+        particles.push(new Particle(x, y));
+      }
+    }
+
+    window.addEventListener('mousemove', handleParticles);
+    window.addEventListener('touchmove', handleParticles);
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].opacity <= 0) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
