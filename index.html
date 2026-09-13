@@ -1,210 +1,328 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Special Surprise For You ❤️</title>
-  <!-- Confetti Library -->
+  <title>तुझ्यासाठी एक खास सरप्राइज ❤️</title>
+
+  <!-- SweetAlert2 CSS & JS (Custom Popups) -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tiro Devanagari Marathi', 'Outfit', sans-serif; }
+
+    /* Animated Multicolor Background */
     body {
-      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #feada6 100%);
+      background: linear-gradient(-45deg, #1a0b2e, #3b0764, #701a75, #4c0519, #0f172a);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow-x: hidden;
-      color: #333;
+      color: #fff;
     }
 
-    /* Floating Music Control */
-    .music-btn {
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Floating Canvas */
+    #canvas {
       position: fixed;
-      top: 15px;
-      right: 15px;
-      z-index: 1000;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 10px 18px;
-      border-radius: 25px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      cursor: pointer;
-      font-weight: bold;
-      color: #d63384;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    /* Universal Step Container */
+    /* Glass Container */
     .step-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      width: 90%;
-      max-width: 600px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 92%;
+      max-width: 580px;
       padding: 35px 25px;
-      border-radius: 25px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      border-radius: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
       text-align: center;
       display: none;
-      animation: fadeIn 0.8s ease-in-out forwards;
+      position: relative;
+      z-index: 10;
+      animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .step-card.active { display: block; }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px) scale(0.95); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    h1, h2 { color: #d63384; margin-bottom: 15px; }
-    p { color: #555; line-height: 1.6; font-size: 1.05rem; }
+    h1 {
+      background: linear-gradient(to right, #f472b6, #fb7185, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+      font-weight: 800;
+    }
 
-    .btn-next {
+    p { color: #e2e8f0; line-height: 1.7; font-size: 1.1rem; }
+
+    /* Multicolor Neon Buttons */
+    .btn-action {
       margin-top: 25px;
-      padding: 12px 30px;
-      font-size: 1.1rem;
-      background: #ff4757;
+      padding: 14px 32px;
+      font-size: 1.15rem;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
       color: white;
       border: none;
-      border-radius: 30px;
+      border-radius: 50px;
       cursor: pointer;
-      font-weight: 600;
-      box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
-      transition: 0.3s;
+      font-weight: bold;
+      box-shadow: 0 10px 25px rgba(236, 72, 153, 0.4);
+      transition: all 0.3s ease;
     }
-    .btn-next:hover { transform: scale(1.05); background: #ff6b81; }
+    .btn-action:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 15px 30px rgba(139, 92, 246, 0.6);
+    }
 
-    /* Step 1: Lock Screen */
+    /* Lock Input */
     .pass-input {
-      padding: 12px 20px;
-      font-size: 1.2rem;
-      border: 2px solid #ff4757;
-      border-radius: 20px;
+      padding: 14px 25px;
+      font-size: 1.5rem;
+      border: 2px solid #a855f7;
+      background: rgba(15, 23, 42, 0.7);
+      color: #38bdf8;
+      border-radius: 30px;
       text-align: center;
-      margin-top: 15px;
+      margin-top: 20px;
       outline: none;
-      width: 80%;
+      letter-spacing: 8px;
+      width: 200px;
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
     }
 
-    /* Step 3: Flip Cards Grid */
-    .flip-grid {
+    /* Flip Cards with Gradient Borders */
+    .memory-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 15px;
-      margin-top: 20px;
+      margin-top: 25px;
     }
     .flip-card {
-      background: #ffeaa7;
-      height: 120px;
-      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      height: 110px;
+      border-radius: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
       font-weight: bold;
-      color: #d63384;
-      padding: 10px;
-      transition: 0.3s;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      color: #38bdf8;
+      padding: 12px;
+      transition: all 0.4s ease;
     }
     .flip-card.open {
-      background: #ff7675;
+      background: linear-gradient(135deg, #06b6d4, #3b82f6);
+      color: white;
+      border-color: #60a5fa;
+      transform: rotateY(180deg);
+    }
+
+    /* Spin Wheel Game */
+    .wheel-container {
+      margin: 20px auto;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 6px solid #f472b6;
+      position: relative;
+      overflow: hidden;
+      transition: transform 3s cubic-bezier(0.15, 0.99, 0.18, 1);
+      box-shadow: 0 0 20px rgba(244, 114, 182, 0.5);
+    }
+    .wheel-section {
+      position: absolute;
+      width: 50%; height: 50%;
+      transform-origin: 100% 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: bold;
       color: white;
     }
+    .sec1 { background: #ec4899; transform: rotate(0deg); }
+    .sec2 { background: #8b5cf6; transform: rotate(90deg); }
+    .sec3 { background: #06b6d4; transform: rotate(180deg); }
+    .sec4 { background: #f59e0b; transform: rotate(270deg); }
 
-    /* Step 4: Game Buttons */
+    /* Interactive Game Section */
     .btn-group {
       position: relative;
-      height: 100px;
-      margin-top: 20px;
+      height: 120px;
+      margin-top: 25px;
     }
-    .btn-yes { background: #2ed573; color: white; padding: 12px 30px; font-size: 1.2rem; border-radius: 25px; border: none; cursor: pointer; }
-    .btn-no { background: #ff4757; color: white; padding: 12px 30px; font-size: 1.2rem; border-radius: 25px; border: none; position: absolute; transition: 0.2s; }
+    .btn-yes {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    }
+    .btn-no {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      border: none;
+      position: absolute;
+      transition: all 0.2s ease-out;
+      font-weight: bold;
+    }
 
-    /* Step 5: Final Gallery & Timer */
+    /* Photo Gallery Grid */
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
       margin-top: 20px;
-      max-height: 250px;
+      max-height: 220px;
       overflow-y: auto;
     }
-    .gallery img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; }
-    
-    .timer-box { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
-    .time-unit { background: #ff4757; color: white; padding: 8px 12px; border-radius: 8px; min-width: 55px; }
-    .time-unit span { font-size: 1.2rem; font-weight: bold; display: block; }
-    .time-unit label { font-size: 0.7rem; }
-
-    /* Floating Hearts */
-    .heart {
-      position: fixed;
-      font-size: 20px;
-      color: rgba(255, 255, 255, 0.7);
-      animation: float 4s linear infinite;
-      bottom: -20px;
-      pointer-events: none;
+    .gallery img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 15px;
+      border: 2px solid #a855f7;
     }
-    @keyframes float { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-100vh); opacity: 0; } }
+
+    /* Timer Box */
+    .timer-box {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .time-unit {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid #38bdf8;
+      padding: 10px;
+      border-radius: 15px;
+      min-width: 65px;
+    }
+    .time-unit span { font-size: 1.4rem; font-weight: bold; display: block; color: #38bdf8; }
+    .time-unit label { font-size: 0.75rem; color: #cbd5e1; }
+
+    /* Music Floating Button */
+    .music-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 10px 20px;
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
   </style>
 </head>
 <body>
 
-  <div class="music-btn" onclick="toggleMusic()">🎵 <span id="mText">Play Music</span></div>
+  <canvas id="canvas"></canvas>
+
+  <div class="music-btn" onclick="toggleMusic()">🎵 <span id="mText">गाणे ऐका</span></div>
   <audio id="bgMusic" loop src="song.mp3"></audio>
 
-  <!-- CHAPTER 1: PASSWORD LOCK -->
+  <!-- STEP 1: LOCK SCREEN -->
   <div class="step-card active" id="step1">
-    <h1>🔒 Secret Portal</h1>
-    <p>Ye webpage sirf ek special person ke liye locked hai. Enter our special date passcode to unlock!</p>
-    <p style="font-size: 0.85rem; color: #888; margin-top: 5px;">(Hint: The date when our love story started DDMM 💖)</p>
-    <input type="password" id="passCode" class="pass-input" placeholder="Enter Passcode...">
+    <h1>🔒 सिक्रेट लव्ह लॉक</h1>
+    <p>ही स्पेशल वेबसाईट उघडण्यासाठी आपल्या प्रेमाची सिक्रेट तारीख एंटर कर!</p>
+    <p style="font-size: 0.85rem; color: #f472b6; margin-top: 8px;">(हिंट: प्रेमाची सुरुवात झालेली तारीख DDMM 💖)</p>
+    <input type="password" id="passCode" class="pass-input" placeholder="****" maxlength="4">
     <br>
-    <button class="btn-next" onclick="checkPass()">Unlock Surprise 🔑</button>
+    <button class="btn-action" onclick="checkPass()">अनलॉक करा 🔑</button>
   </div>
 
-  <!-- CHAPTER 2: ROMANTIC LETTER / STORY -->
+  <!-- STEP 2: ROMANTIC LETTER -->
   <div class="step-card" id="step2">
-    <h1>Dear Love 💌</h1>
+    <h1>माझ्या प्रिय... 💌</h1>
     <p id="storyText">
-      Jab se tum meri life me aayi ho, sab kuch badal gaya hai. Aisa koi din nahi jab tumhara khayal na aaye...
+      ज्या दिवसापासून तू माझ्या आयुष्यात आलीस, माझं जग पूर्णपणे रंगीबेरंगी आणि सुंदर बनलं आहे...
     </p>
-    <button class="btn-next" onclick="nextStory()">Read Next Page 📖</button>
+    <button class="btn-action" onclick="nextStory()">पुढे वाचा 📖</button>
   </div>
 
-  <!-- CHAPTER 3: MEMORY CARDS -->
+  <!-- STEP 3: FLIP CARDS -->
   <div class="step-card" id="step3">
-    <h1>Click to Reveal Memories ✨</h1>
-    <p>In 4 cards par click karke dekho tumhare liye messages hain:</p>
-    <div class="flip-grid">
-      <div class="flip-card" onclick="revealCard(this, 'Tumhari Smile 😊')">Card 1</div>
-      <div class="flip-card" onclick="revealCard(this, 'Tumhari Cuteness 🌸')">Card 2</div>
-      <div class="flip-card" onclick="revealCard(this, 'Hamari Baatein 💬')">Card 3</div>
-      <div class="flip-card" onclick="revealCard(this, 'Mera Pure Heart ❤️')">Card 4</div>
+    <h1>काही छान आठवणी ✨</h1>
+    <p>कार्ड्सवर क्लिक कर आणि तुझ्यासाठी असलेले मेसेजेस उघड:</p>
+    <div class="memory-grid">
+      <div class="flip-card" onclick="revealCard(this, 'तुझं क्युट हसू 😊')">कार्ड १</div>
+      <div class="flip-card" onclick="revealCard(this, 'आपल्या लांबच लांब गप्पा 💬')">कार्ड २</div>
+      <div class="flip-card" onclick="revealCard(this, 'तुझा तो खोडकरपणा 🌸')">कार्ड ३</div>
+      <div class="flip-card" onclick="revealCard(this, 'माझं तुझ्यावरचं अथांग प्रेम ❤️')">कार्ड ४</div>
     </div>
-    <button class="btn-next" id="step3Next" style="display:none;" onclick="goToStep(4)">Continue to Next Level 🚀</button>
+    <button class="btn-action" id="step3Next" style="display:none;" onclick="goToStep(4)">पुढील गेम खेळा 🎮</button>
   </div>
 
-  <!-- CHAPTER 4: DO YOU LOVE ME GAME -->
+  <!-- STEP 4: DATE NIGHT SPIN WHEEL GAME -->
   <div class="step-card" id="step4">
-    <h1>One Ultimate Question 🥺❤️</h1>
-    <p>Kitni bhi koshish kar lo, tum 'NO' par click nahi kar paogi!</p>
-    <h2>Do You Love Me The Most?</h2>
+    <h1>लकी डेट व्हील 🎡</h1>
+    <p>स्पिन बटणावर क्लिक कर आणि बघ आज तुझ्यासाठी काय सरप्राइज आहे!</p>
+    <div class="wheel-container" id="wheel">
+      <div class="wheel-section sec1">☕ कॉफी डेट</div>
+      <div class="wheel-section sec2">🎬 मूव्ही नाईट</div>
+      <div class="wheel-section sec3">🍫 चॉकलेट गिफ्ट</div>
+      <div class="wheel-section sec4">🍕 पिझ्झा पार्टी</div>
+    </div>
+    <button class="btn-action" onclick="spinWheel()">व्हील फिरवा (Spin) 🎯</button>
+  </div>
+
+  <!-- STEP 5: DO YOU LOVE ME GAME -->
+  <div class="step-card" id="step5">
+    <h1>एक महत्त्वाचा प्रश्न! 🥺❤️</h1>
+    <p>तू कितीही प्रयत्न केलास तरी 'नाही' वर क्लिक करू शकणार नाहीस!</p>
+    <h2 style="color: #f472b6; margin-top: 15px;">तू माझ्यावर सर्वात जास्त प्रेम करतेस का?</h2>
     <div class="btn-group">
-      <button class="btn-yes" onclick="goToStep(5); startConfetti();">YES, I DO! 🥰</button>
-      <button class="btn-no" id="noBtn" onmouseover="dodgeNo()" onclick="dodgeNo()">NO 😜</button>
+      <button class="btn-yes" onclick="goToStep(6); startConfetti();">होय, खूप जास्त! 🥰</button>
+      <button class="btn-no" id="noBtn" onmouseover="dodgeNo()" onclick="dodgeNo()">नाही 😜</button>
     </div>
   </div>
 
-  <!-- CHAPTER 5: GRAND CELEBRATION -->
-  <div class="step-card" id="step5">
+  <!-- STEP 6: GRAND CELEBRATION -->
+  <div class="step-card" id="step6">
     <h1>🎉 FOREVER & ALWAYS 🎉</h1>
-    <p>I knew it! Mujhse zyada pyaar tumse koi nahi kar sakta! ❤️</p>
+    <p>मला माहित होतं! माझ्यापेक्षा जास्त प्रेम तुझ्यावर कोणीच करू शकत नाही! ❤️</p>
 
     <!-- Love Counter -->
+    <p style="margin-top: 15px; font-size: 0.95rem; color: #38bdf8;">आपल्या प्रेमाला झालेले दिवस:</p>
     <div class="timer-box">
-      <div class="time-unit"><span id="days">0</span><label>Days</label></div>
-      <div class="time-unit"><span id="hours">0</span><label>Hours</label></div>
-      <div class="time-unit"><span id="mins">0</span><label>Mins</label></div>
-      <div class="time-unit"><span id="secs">0</span><label>Secs</label></div>
+      <div class="time-unit"><span id="days">0</span><label>दिवस</label></div>
+      <div class="time-unit"><span id="hours">0</span><label>तास</label></div>
+      <div class="time-unit"><span id="mins">0</span><label>मिनिटे</label></div>
+      <div class="time-unit"><span id="secs">0</span><label>सेकंद</label></div>
     </div>
 
     <!-- Photo Gallery -->
@@ -215,46 +333,60 @@
       <img src="photo4.jpg" alt="Memory">
     </div>
 
-    <p style="margin-top: 15px; font-weight: bold; color: #ff4757;">Happy Surprise! I Love You 💖</p>
+    <p style="margin-top: 20px; font-weight: bold; color: #f472b6; font-size: 1.3rem;">I Love You So Much! 💖</p>
   </div>
 
   <script>
-    // Audio Player
+    // Audio Control
     const music = document.getElementById('bgMusic');
     let isPlaying = false;
     function toggleMusic() {
       if(isPlaying) {
         music.pause();
-        document.getElementById('mText').innerText = "Play Music";
+        document.getElementById('mText').innerText = "गाणे ऐका";
       } else {
         music.play();
-        document.getElementById('mText').innerText = "Pause Music";
+        document.getElementById('mText').innerText = "गाणे थांबवा";
       }
       isPlaying = !isPlaying;
     }
 
-    // Step Switcher
+    // Step Controller
     function goToStep(stepNumber) {
       document.querySelectorAll('.step-card').forEach(card => card.classList.remove('active'));
       document.getElementById('step' + stepNumber).classList.add('active');
-      if(!isPlaying) toggleMusic(); 
+      if(!isPlaying) toggleMusic();
     }
 
-    // Passcode System (Updated Passcode: 2403)
+    // Password Check (2403) with SweetAlert2
     function checkPass() {
       const input = document.getElementById('passCode').value;
       if(input === "2403") {
-        goToStep(2);
+        Swal.fire({
+          icon: 'success',
+          title: 'अनलॉक झाले! ❤️',
+          text: 'चला आपल्या सुंदर प्रवासाकडे जाऊया...',
+          background: '#1e1b4b',
+          color: '#fff',
+          confirmButtonColor: '#ec4899'
+        }).then(() => goToStep(2));
       } else {
-        alert("Wrong Password! Hint: The date when our love story started (2403) 😜");
+        Swal.fire({
+          icon: 'error',
+          title: 'चुकीचा पासवर्ड! 😜',
+          text: 'हिंट: प्रेमाची सुरुवात झालेली तारीख (2403)',
+          background: '#1e1b4b',
+          color: '#fff',
+          confirmButtonColor: '#ef4444'
+        });
       }
     }
 
-    // Story Steps
+    // Story Lines
     const storyPages = [
-      "Jab se tum meri life me aayi ho, sab kuch badal gaya hai. Aisa koi din nahi jab tumhara khayal na aaye...",
-      "Tumhari ek choti si smile mera pura din bana deti hai. Mujhko tumse itna pyaar ho jayega kabhi socha nahi tha...",
-      "Thank you meri life me aane ke liye aur har moment ko itna special banane ke liye! ❤️"
+      "ज्या दिवसापासून तू माझ्या आयुष्यात आलीस, माझं जग पूर्णपणे रंगीबेरंगी आणि सुंदर बनलं आहे...",
+      "तुझं एक छोटंसं हसू माझा पूर्ण दिवस आनंदी बनवतं. तुझ्यावर माझं इतकं प्रेम जडेल असं मला कधीच वाटलं नव्हतं...",
+      "माझ्या आयुष्यात आल्याबद्दल आणि प्रत्येक क्षण इतका खास बनवल्याबद्दल मनापासून धन्यवाद! ❤️"
     ];
     let storyIndex = 0;
     function nextStory() {
@@ -266,7 +398,7 @@
       }
     }
 
-    // Flip Cards Tracker
+    // Memory Cards Tracker
     let revealedCount = 0;
     function revealCard(element, text) {
       if(!element.classList.contains('open')) {
@@ -279,10 +411,30 @@
       }
     }
 
-    // Dodge No Button
+    // Spin Wheel Logic
+    let spun = false;
+    function spinWheel() {
+      if(spun) return;
+      spun = true;
+      const wheel = document.getElementById('wheel');
+      const randomDeg = 1440 + Math.floor(Math.random() * 360);
+      wheel.style.transform = `rotate(${randomDeg}deg)`;
+      setTimeout(() => {
+        Swal.fire({
+          icon: 'star',
+          title: '🎉 येहहह!',
+          text: 'आज तुला मिळणारा सरप्राइज मी नक्की पूर्ण करेन!',
+          background: '#1e1b4b',
+          color: '#fff',
+          confirmButtonColor: '#8b5cf6'
+        }).then(() => goToStep(5));
+      }, 3200);
+    }
+
+    // Dodge Button
     function dodgeNo() {
       const btn = document.getElementById('noBtn');
-      const x = Math.random() * (window.innerWidth - 120);
+      const x = Math.random() * (window.innerWidth - 140);
       const y = Math.random() * 200 - 100;
       btn.style.left = `${x}px`;
       btn.style.top = `${y}px`;
@@ -290,11 +442,11 @@
 
     // Confetti Fireworks
     function startConfetti() {
-      confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+      confetti({ particleCount: 300, spread: 140, origin: { y: 0.6 } });
     }
 
-    // Love Counter (Updated start date to 24th March)
-    const startDate = new Date(2024, 2, 24); // Year, Month (2 = March), Day
+    // Love Counter (24 March 2024 Start Date)
+    const startDate = new Date(2024, 2, 24);
     setInterval(() => {
       const now = new Date();
       const diff = now - startDate;
@@ -304,16 +456,68 @@
       document.getElementById('secs').innerText = Math.floor((diff / 1000) % 60);
     }, 1000);
 
-    // Background Floating Hearts
-    setInterval(() => {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.innerHTML = '❤️';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 4000);
-    }, 400);
+    // Dynamic Touch & Mouse Floating Hearts
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    let particles = [];
+    class Particle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 16 + 6;
+        this.speedX = Math.random() * 3 - 1.5;
+        this.speedY = Math.random() * 3 - 1.5;
+        this.color = `hsl(${Math.random() * 360}, 100%, 75%)`;
+        this.opacity = 1;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.opacity -= 0.02;
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.font = `${this.size}px serif`;
+        ctx.fillText('✨', this.x, this.y);
+        ctx.restore();
+      }
+    }
+
+    function handleParticles(e) {
+      const x = e.touches ? e.touches[0].clientX : e.clientX;
+      const y = e.touches ? e.touches[0].clientY : e.clientY;
+      for (let i = 0; i < 2; i++) {
+        particles.push(new Particle(x, y));
+      }
+    }
+
+    window.addEventListener('mousemove', handleParticles);
+    window.addEventListener('touchmove', handleParticles);
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].opacity <= 0) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
   </script>
 </body>
-</html>
+  </html>
+  
